@@ -39,9 +39,9 @@ int main(void) {
 
 
     cin >> m >> n >> h;
-    // cout << m << n << h << endl;
     get_table();
-    print_table();
+    // print_table();
+    
 
     
 
