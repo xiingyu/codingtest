@@ -2,28 +2,24 @@
 #include <vector>
 using namespace std;
 int n,m;
-vector<int> table;
 vector<vector<int>> results;
 
-vector<vector<int>> dfs(int start, int depth) {
+void dfs(int start, int depth, vector<int> current) {
     int i, j;
-    vector<vector<int>> re_temp;
-    if (depth >= m) return re_temp;
+    if (depth >= m) {
+        results.push_back(current);
+        return ;
+    }
     for(i = start; i <= n; ++i) {
-        if(depth == 0) {
-            vector<int> temp;
-            temp.resize(m,i);
-            results.push_back(temp);
-        }
-        else {
-            results[results.size()-1][depth] = i;
-        }
-        dfs(start, depth +1);
-    }   
+        current.push_back(i);
+        dfs(i+1, depth+1, current);
+        current.pop_back();
+    }
+
 }
 
 void print_map() {
-    for(int i = 0; i <= n; ++i) {
+    for(int i = 1; i < results.size(); ++i) {
         for(int j = 0; j < m; ++j) {
             cout << results[i][j] << " ";
         }
@@ -34,7 +30,7 @@ void print_map() {
 int main(void) {
     cin >> n >> m;
     results.resize(1, vector<int>(m,0));
-    for(int i = 1; i <= n; ++i) {
-        table.push_back(i);
-    }
+    vector<int> empty_vector;
+    dfs(1,0,empty_vector);
+    print_map();
 }
