@@ -31,7 +31,7 @@ int findMax() {
     for(int i = 0; i < 9; ++i) {
         if (i == 6) {
             if(cnt[6] % 2 == 0) cnt[6] = cnt[6] / 2;
-            else cnt[6] / 2 + 1;
+            else cnt[6] =cnt[6] / 2 + 1;
         }
         maxCnt = max(maxCnt, cnt[i]);
     }
