@@ -28,11 +28,7 @@ void init() {
     for(int i = 1; i <= N; ++i) {
         nextVector.clear(); requireVector.clear();
         cin >> curCost >> taskCnt;
-        if(i == 1) {
-            tasks[i] = (task{curCost, taskCnt, nextVector, requireVector});
-            que.push(i);
-        }
-        else if(!taskCnt) {
+        if(!taskCnt) {
             tasks[i] = (task{curCost, taskCnt, nextVector, requireVector});
             que.push(i);
         }
