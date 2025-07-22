@@ -46,6 +46,9 @@ void logic() {
         if(target == 1) {
             endTime[target] = costs[target];
         }
+        
+        if (endTime[target] == 0)
+            endTime[target] = costs[target];
 
         if(!nextNodes[target].empty()) {
             for(int i = 0; i < nextNodes[target].size(); ++i) {
@@ -54,12 +57,9 @@ void logic() {
                 inDegree[next] -= 1;
                 if(inDegree[next] == 0) {
                     que.push(next);
-                    // cout << next << " next pushed " << endl;
+                    // cout << next << " next pushed " << endTime[next] << " " << endTime[target] + costs[next] << endl;
                 }
             }
-        }
-        else {
-                endTime[target] = max(costs[next], endTime[target]);
         }
     }
 
@@ -67,8 +67,26 @@ void logic() {
 
 void printMap() {
     int i,j,k;
+
+    cout << "nextNodes : " << endl;
+    for(i = 0; i < nextNodes.size(); ++i) {
+        for(j = 0; j < nextNodes[i].size(); ++j) {
+            cout << "at i, j" << i << " , " << j << " : " << nextNodes[i][j] << " ";
+        }
+        cout << endl;
+    }
+    cout << endl;
+
+    cout << "endTime : " << endl;
     for(i = 0; i < endTime.size(); ++i) {
         cout << endTime[i] << " ";
+    }
+    cout << endl;
+
+    
+    cout << "costs : " << endl;
+    for(i = 0; i < costs.size(); ++i) {
+        cout << costs[i] << " ";
     }
     cout << endl;
 }
