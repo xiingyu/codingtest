@@ -59,6 +59,7 @@ int main() {
             result.push_back(i);
         }
     }
+    
     int start = result.size() == 1 ? 0 : 1;
     for(int i = start; i < result.size(); ++i) {
         cout << result[i] << endl;
