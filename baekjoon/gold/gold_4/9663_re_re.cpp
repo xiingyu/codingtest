@@ -14,27 +14,24 @@ int dx[] = { -1, 1, -1, 0, 1};
 int dy[] = {  1, 1, 0, 1, 0};
 
 vector<vector<bool>> visited;
+vector<bool> rowFlag;
 vector<point> results;
 
-void printMap(const vector<vector<bool>> visited);
 
 void init() {
     cin >> N;
     visited.assign(N, vector<bool>(N, false));
-    // table.assign(N, vector<int>(N, 0));
 
 }
 
-void clearAll(vector<vector<bool>>&visited) {
+void clearAll() {
     visited.clear();    visited.assign(N, vector<bool>(N, false));
-    // table.clear();      table.assign(N, vector<int>(N, 0));
+    rowFlag.clear();    rowFlag.assign(N,false);
 }
 
-void dfs(point curr, int cnt, vector<vector<bool>> visited) {
+void dfs(point curr, int cnt) {
     int nx, ny, i,j;
 
-    // cout << curr.y << " " << curr.x << " " << curr.cnt << endl;
-    // printMap(curr.visited);
     visited[curr.y][curr.x] = true;
 
     if(cnt >= N) {
@@ -62,12 +59,10 @@ void dfs(point curr, int cnt, vector<vector<bool>> visited) {
     ny = curr.y + 1;
     if(ny >= N) return;
     for(j = 0; j < N; ++j) {
-        // if(i == curr.y && j <= curr.x) continue;
         if(visited[ny][j] == true) continue;
 
         visited[ny][j] = true;
-        dfs(point{ny,j}, cnt + 1, visited);
-        // cout << i << " " << j << " is pushed!!!!!!!!" << endl;
+        dfs(point{ny,j}, cnt + 1);
         visited[ny][j] = false;
     }
     
@@ -86,11 +81,10 @@ void printMap(const vector<vector<bool>> visited) {
 
 
 int main() {
-    vector<vector<bool>>visited;
     init();
     for(int j = 0; j < N;++j) {
-        clearAll(visited);
-        dfs(point{0,j}, 1, visited);
+        clearAll();
+        dfs(point{0,j}, 1);
 
     }
 
