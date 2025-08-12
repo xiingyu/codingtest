@@ -71,6 +71,7 @@ void printMap() {
 
 int main() {
     if(!init()) {
+        cout << 0 << endl;
         return 0;
     }
     

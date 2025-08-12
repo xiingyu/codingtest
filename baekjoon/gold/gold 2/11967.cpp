@@ -38,7 +38,7 @@ void bfs() {
 
     while(!que.empty()) {
         point curr = que.front();   que.pop();
-        cout << "At curr : " << curr.x << " " << curr.y << endl;
+        // cout << "At curr : " << curr.x << " " << curr.y << endl;
 
         for(const point& targetRoom : nextMap[curr.y][curr.x]) { 
             if(visited[targetRoom.y][targetRoom.x]) continue;
@@ -57,14 +57,15 @@ void bfs() {
                     // cout << "pushed : " << targetRoom.x << " " << targetRoom.y << endl;
                     visited[targetRoom.y][targetRoom.x] = true;
                     que.push(targetRoom);
-                    break;
-                } else if(lighted[ny][nx]) {
+                    // break;
+                } 
+                // else if(lighted[ny][nx]) {
                     
-                    // cout << "curr : " << curr.x << " " << curr.y << endl;
-                    // cout << "pushed : " << targetRoom.x << " " << targetRoom.y << endl;
-                    visited[targetRoom.y][targetRoom.x] = true;
-                    que.push(targetRoom);
-                }
+                //     // cout << "curr : " << curr.x << " " << curr.y << endl;
+                //     // cout << "pushed : " << targetRoom.x << " " << targetRoom.y << endl;
+                //     visited[targetRoom.y][targetRoom.x] = true;
+                //     que.push(targetRoom);
+                // }
             }
             
         }
