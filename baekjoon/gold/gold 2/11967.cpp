@@ -37,7 +37,7 @@ void bfs() {
     lighted[1][1] = true;
 
     while(!que.empty()) {
-        point curr = que.front();   que.pop();\
+        point curr = que.front();   que.pop();
 
         for(const point& targetRoom : nextMap[curr.y][curr.x]) { 
             if(visited[targetRoom.y][targetRoom.x]) continue;
@@ -49,7 +49,7 @@ void bfs() {
                 ny = targetRoom.y + dy[j];
                 if(nx <= 0 || ny <= 0 || nx > N || ny > N) continue;
 
-                if(visited[ny][nx]) {\
+                if(visited[ny][nx]) {
                     visited[targetRoom.y][targetRoom.x] = true;
                     que.push(targetRoom);
                     // break;
@@ -71,8 +71,6 @@ void bfs() {
             if(nx <= 0 || ny <= 0 || nx > N || ny > N) continue;
             if(lighted[ny][nx] && !visited[ny][nx]) {
                 
-                // cout << "additional" << endl;
-                // cout << "pushed : " << nx << " " << ny << endl;
                 visited[ny][nx] = true;
                 que.push(point{nx,ny});
             }
