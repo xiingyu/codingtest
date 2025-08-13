@@ -5,7 +5,7 @@
 using namespace std;
 
 
-#define unorderedMap
+#define unorderedMap2
 
 #ifdef lowerNupper
 int main() {
@@ -110,10 +110,10 @@ int main() {
 
 #endif
 
-#include <unordered_map>
 
 #ifdef unorderedMap
 
+#include <unordered_map>
 
 int main() {
     vector<int> arr = {1, 2, 2, 3, 3, 3, 2, 4};
@@ -136,5 +136,103 @@ int main() {
     cout << "가장 많이 등장한 값: " << max_val << "\n";
     cout << "등장 횟수: " << max_count << "\n";
 
+}
+#endif
+
+#ifdef simpleMap0
+
+int main() {
+    vector<int> arr = {1, 2, 2, 3, 3, 3, 2, 4};
+    sort(arr.begin(), arr.end());
+
+    int max_val = arr[0];
+    int max_count = 1;
+    int curr_val = arr[0];
+    int curr_count = 1;
+
+    for (int i = 1; i < arr.size(); i++) {
+        if (arr[i] == curr_val) {
+            curr_count++;
+        } else {
+            if (curr_count > max_count) {
+                max_count = curr_count;
+                max_val = curr_val;
+            }
+            curr_val = arr[i];
+            curr_count = 1;
+        }
+    }
+    if (curr_count > max_count) { // 마지막 값 처리
+        max_count = curr_count;
+        max_val = curr_val;
+    }
+
+    cout << "가장 많이 등장한 값: " << max_val << "\n";
+    cout << "등장 횟수: " << max_count << "\n";
+}
+
+
+
+
+#endif
+
+
+#ifdef simpleMap
+
+int main() {
+    vector<int> arr = {1, 2, 2, 3, 3, 3, 2, 4,5,5,5,5,5,6,7,8,9, 5, 5, 5};
+    sort(arr.begin(), arr.end());
+
+    int max_val = arr[0];
+    int max_count = 1;
+    int curr_val = arr[0];
+    int curr_count = 1;
+
+    for(int i = 0; i < arr.size(); ++i) {
+        if(arr[i] == curr_val) {
+            curr_count += 1;
+        }
+        else {
+            if(curr_count > max_count) {
+                max_count = curr_count;
+                max_val = curr_val;
+            }
+            curr_val = arr[i];
+            curr_count = 1;
+        }
+    }
+    if (curr_count > max_count) { // 마지막 값 처리
+        max_count = curr_count;
+        max_val = curr_val;
+    }
+
+    cout << "가장 많이 등장한 값: " << max_val << "\n";
+    cout << "등장 횟수: " << max_count << "\n";
+}
+
+#endif
+
+#ifdef unorderedMap2
+#include <unordered_map>
+int main() {
+
+    vector<int> arr = {1, 2, 2, 3, 3, 3, 2, 4};
+    unordered_map<int,int> freq;
+
+    for(int i = 0; i < arr.size(); ++i) {
+        freq[arr[i]] +=1;
+    }
+
+    int max_val = arr[0];
+    int max_count = freq[max_val];
+
+    for(const auto& target : freq) {
+        if(target.second > max_count) {
+            max_val = target.first;
+            max_count = target.second;
+        }
+    }
+    cout << "가장 많이 등장한 값: " << max_val << "\n";
+    cout << "등장 횟수: " << max_count << "\n";
 }
 #endif
