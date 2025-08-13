@@ -43,7 +43,7 @@ void bfs() {
             if(visited[targetRoom.y][targetRoom.x]) continue;
 
             lighted[targetRoom.y][targetRoom.x] = true;
-\
+
             for(j = 0; j < 4; ++j) {
                 nx = targetRoom.x + dx[j];
                 ny = targetRoom.y + dy[j];
