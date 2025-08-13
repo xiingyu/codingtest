@@ -37,24 +37,19 @@ void bfs() {
     lighted[1][1] = true;
 
     while(!que.empty()) {
-        point curr = que.front();   que.pop();
-        // cout << "At curr : " << curr.x << " " << curr.y << endl;
+        point curr = que.front();   que.pop();\
 
         for(const point& targetRoom : nextMap[curr.y][curr.x]) { 
             if(visited[targetRoom.y][targetRoom.x]) continue;
 
             lighted[targetRoom.y][targetRoom.x] = true;
-
-            // bool isItPosible = false;
+\
             for(j = 0; j < 4; ++j) {
                 nx = targetRoom.x + dx[j];
                 ny = targetRoom.y + dy[j];
                 if(nx <= 0 || ny <= 0 || nx > N || ny > N) continue;
 
-                if(visited[ny][nx]) {
-                    // isItPosible = true;
-                    // cout << "curr : " << curr.x << " " << curr.y << endl;
-                    // cout << "pushed : " << targetRoom.x << " " << targetRoom.y << endl;
+                if(visited[ny][nx]) {\
                     visited[targetRoom.y][targetRoom.x] = true;
                     que.push(targetRoom);
                     // break;
