@@ -43,7 +43,8 @@ void fluid() {
 void printTable() {
     for(int i = 1; i <= n; ++i) {
         for(int j = 1; j <= n; ++j) {
-            cout << table[i][j] << " ";
+            if(table[i][j] == MAX)  cout << 0 << " ";
+            else                    cout << table[i][j] << " ";
         }
         cout << endl;
     }
