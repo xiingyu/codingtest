@@ -54,12 +54,12 @@ void fluid() {
 
 void navigationPrint(int start, int goal) {
     if(table[start][goal] == 0) {
-        cout << 0 << endl;
+        cout << 0 << "\n";
         return;
     }
 
     if(route[start][goal] == 0) {
-        cout << 2 << " " << start << " " << goal << endl;
+        cout << 0 << "\n";
         return;
     }
     
