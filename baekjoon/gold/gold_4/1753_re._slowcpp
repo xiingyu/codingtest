@@ -1,0 +1,72 @@
+#include <iostream>
+#include <vector>
+#include <queue>
+#include <algorithm>
+#define MAX 1e9
+using namespace std;
+
+int V,E,start;
+struct node {
+    int to, cost;
+};
+vector<vector<node>> table;
+vector<int> costTable;
+
+auto cmp = [](const node&a, const node&b) {
+    return a.cost > b.cost;
+};
+
+void init() {
+    int u,v,w;
+    cin >> V >> E >> start;
+
+    table.resize(V+1);
+    costTable.resize(V+1, MAX);
+
+    while(E--) {
+        cin >> u >> v >> w;
+
+        table[u].push_back(node{v,w});
+    }
+
+    costTable[start] = 0;
+}
+
+void dijkstra() {
+    priority_queue<node, vector<node>, decltype(cmp)> PQ(cmp);
+    for(node s : table[start]) {
+        PQ.push(node{s.to, s.cost});
+        costTable[s.to] = min(costTable[start]+s.cost, costTable[s.to]);
+    }
+
+
+    while(!PQ.empty()) {
+        node curr = PQ.top();   PQ.pop();
+
+        for(node next : table[curr.to]) {
+            if(costTable[curr.to] + next.cost < costTable[next.to]) {
+                costTable[next.to] = costTable[curr.to] + next.cost;
+                PQ.push(node{next.to, next.cost + curr.cost});
+            }
+        }
+    }
+}
+
+
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr); cout.tie(nullptr);
+    init();
+    dijkstra();
+
+    int target;
+    for(int i = 1; i <= V; ++i) {
+        target = costTable[i];
+        if(target == MAX)   cout <<"INF\n";
+        else                cout << target << "\n";
+
+    }
+
+    return 0;
+}
