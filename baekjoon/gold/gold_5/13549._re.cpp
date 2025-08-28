@@ -7,59 +7,81 @@ using namespace std;
 int N, K;
 int result = 0;
 int dx[] = {-1, 1};
+vector<bool> visited;
 struct point {
     int x, time;
+};
+auto cmp = [](const point& a, const point& b) {
+    return a.time > b.time;
 };
 
 void init() {
     cin >> N >> K;
+    visited.resize(MAX+1, false);
 }
 
 void dijkstra() {
     int nx;
-    queue<point> Q;
-    Q.push(point{N, 0});
+    priority_queue<point, vector<point>, decltype(cmp)> PQ(cmp);
+    PQ.push(point{N, 0});
+    // visited[N] = true;
 
-    while(!Q.empty()) {
-        point curr = Q.front(); Q.pop();
+    while(!PQ.empty()) {
+        // point curr = PQ.top(); PQ.pop();
         // cout << "curr.x : " << curr.x << endl;
+
+        // if(curr.x == K) {
+        //     result = curr.time;
+        //     return;
+        // }
+
+        
+        // nx = curr.x * 2;
+        // if(nx <= MAX && !visited[nx]){
+        //     visited[nx] = true;
+        //     PQ.push(point{nx, curr.time});
+        // }
+       
+            
+
+        // for(int i = 0; i < 2; ++i) {
+        //     nx = curr.x + dx[i];
+
+        //     if(nx < 0 || nx > MAX || visited[nx]) continue;
+
+        //     visited[nx] = true;
+        //     PQ.push(point{nx, curr.time + 1});
+        // }
+        
+        point curr = PQ.top(); 
+        PQ.pop();
+        // cout << "curr.x : " << curr.x << endl;
+        // 큐에서 꺼낼 때 방문 체크
+        if(visited[curr.x]) continue;
+        visited[curr.x] = true;
 
         if(curr.x == K) {
             result = curr.time;
             return;
         }
 
+        // 순간이동 (시간 0)
+        int nx = curr.x * 2;
+        if(nx <= MAX && !visited[nx]){
+            PQ.push(point{nx, curr.time});
+        }
         
-        // if(curr.x < K && curr.x <= (int)(MAX/2) && curr.x != 0) {
-        if(curr.x < K && curr.x != 0) {
-            nx = curr.x * 2;
-            while(nx <= MAX && nx <= K*2) {
-                Q.push(point{nx, curr.time});
-                nx*=2;
-            }
-            
+        // 앞뒤 이동 (시간 +1)
+        nx = curr.x + 1;
+        if(nx <= MAX && !visited[nx]) {
+            PQ.push(point{nx, curr.time + 1});
         }
-
-        if(curr.x > K) {
-            Q.push(point{K, curr.time + curr.x - K});
+        
+        nx = curr.x - 1;
+        if(nx >= 0 && !visited[nx]) {
+            PQ.push(point{nx, curr.time + 1});
         }
-        else {
-            for(int i = 0; i < 2; ++i) {
-                nx = curr.x + dx[i];
-
-                if(nx < 0 || nx > MAX) continue;
-
-                Q.push(point{nx, curr.time + 1});
-            }
-        }
-
-        // for(int i = 0; i < 2; ++i) {
-        //     nx = curr.x + dx[i];
-
-        //     if(nx < 0 || nx > MAX) continue;
-
-        //     PQ.push(point{nx, curr.time + 1});
-        // }
+        
         
     }
 
