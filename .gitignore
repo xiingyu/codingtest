@@ -1,4 +1,6 @@
-# .cph/
-# **/.cph/
+.cph/
+**/.cph/
 # git rm -r --cached **/.cph
 #git rm -r --cached **/.cph
+
+#Get-ChildItem -Path . -Recurse -Directory -Force -Filter ".cph" | Remove-Item -Recurse -Force
