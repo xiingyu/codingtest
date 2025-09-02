@@ -1,4 +1,4 @@
-.cph/
-**/.cph/
-git rm -r --cached **/.cph
+# .cph/
+# **/.cph/
+# git rm -r --cached **/.cph
 #git rm -r --cached **/.cph
