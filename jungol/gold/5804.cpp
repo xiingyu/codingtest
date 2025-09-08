@@ -3,66 +3,75 @@
 #include <algorithm>
 using namespace std;
 
-enum {
-    TREE_EMPTY,
-    TREE_PICK
-};
-
-int N,C, maxHouse;
-vector<int> houses;
-vector<int> road;
-vector<int> pickedIndex;
+int N,C;
+vector<int> table;
+vector<int> betweens;
 
 void init() {
     int temp;
     cin >> N >> C;
 
-    for(int i = 0; i < C; ++i) {
+    for(int i = 0; i < N; ++i) {
         cin >> temp;
-        houses.push_back(temp);
+        table.push_back(temp);
     }
-    sort(houses.begin(), houses.end());
-    maxHouse = houses[C - 1];
 
-    road.resize(maxHouse+1, TREE_EMPTY);
+    sort(table.begin(), table.end());
 
-    road[houses[0]] = TREE_PICK;
-    road[houses[C - 1]] = TREE_PICK;
-    pickedIndex.push_back(0);
-    pickedIndex.push_back(C-1);
+    for(int i = 0; i < N-1; ++i) {
+        betweens.push_back(table[i+1] - table[i] );
+    }
 }
 
-int binarySearch(int target, int start, int end) {  //tartget is value, start&end are index
-    int mid;
-    int left = houses[start];
-    int right = houses[end];
+bool isItOkay(const int& target) {
+    int tempSums = 0;
+    int result = 0;
+    for(int i = 0; i < N-1; ++i) {
+        tempSums += betweens[i];
+        
+        if(tempSums >= target) {
+            result++;
+            tempSums = 0;
+        }
+        // cout << tempSums << " " << result << endl;
+        if(result >= C-1) return true;
+    }
+    return false;
+}
 
-    while(left <= right) {
-        mid = (start + end) / 2;
-        if(houses[mid] == target) {
-            return mid;
-        } else if (houses[mid] < target) {
-            left = mid;
+int binaryLogic() {
+    int mid;
+    int left = 1;
+    int right = table.back();
+    int befMid = -1;
+
+
+    while(left < right) {
+        mid = (left + right) / 2;
+
+        // cout << "mid : " << mid << endl;
+
+        if(isItOkay(mid)) {
+            if(befMid == mid) break;
+            else left = mid;
         } else {
             right = mid;
         }
+        befMid = mid;
     }
-
-    return (abs(houses[left] - target) < abs(houses[right] - target)) ? left: right;
+    return mid;
 }
 
-void logic() {
-
-
-}
 
 int main() {
     init();
     if(C == 2) {
-        cout << houses[1] - houses[0];
-        return 0;
+        cout << table.back() - table.front();
     } else {
-        logic();
+        cout << binaryLogic();
+        // isItOkay(50);
     }
 
+
+    return 0;
 }
