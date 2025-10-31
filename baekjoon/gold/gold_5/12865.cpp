@@ -50,7 +50,7 @@ int main() {
 
     init();
     calculateDP();
-    printMap();
+    // printMap();
 
     cout << DP[N][K] << endl;
 
