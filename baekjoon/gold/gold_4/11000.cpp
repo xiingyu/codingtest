@@ -9,6 +9,7 @@ struct lacture{
     int s,e;
 };
 vector<lacture> lactures;
+priority_queue<int, vector<int>, greater<int>> PQ;
 
 auto cmp(const lacture& a, const lacture&b) {
     if(a.s < b.s)   return true;
@@ -31,8 +32,22 @@ void init() {
 
 int main() {
     
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr); cout.tie(nullptr);
+    
     init();
+    
+    PQ.push(0);
+    for(lacture target : lactures) {
+        if(target.s >= PQ.top()) {
+            PQ.pop();
+            PQ.push(target.e);
+        } else {
+            PQ.push(target.e);
+        }
+    }
 
+    cout << PQ.size();
 
     return 0;
 }
