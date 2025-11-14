@@ -58,6 +58,7 @@ int dijkstra() {
         Qpoint curr = PQ.top(); PQ.pop();
 
         if(curr.y == goal.y && curr.x == goal.x) return curr.cost;
+        cout << curr.y << " " << curr.x << " " << curr.cost << endl;
 
         int nx, ny, ncost, i, adding;
         int nturn = curr.turn + 1;
