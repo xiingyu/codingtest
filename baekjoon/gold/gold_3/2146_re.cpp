@@ -58,8 +58,9 @@ void makeVisit(point region) {
             // tempVector.push_back(next);
             visited[next.y][next.x] = true;
             table[next.y][next.x] = landNums;
+            if(wallFlag == 4)   tempVector.push_back(next);
         }
-        if(wallFlag == 4)   tempVector.push_back(next);
+        
     }
     lands.push_back(tempVector);
 
