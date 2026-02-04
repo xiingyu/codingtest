@@ -18,19 +18,23 @@ void init() {
 }
 
 void process() {
-    int befBig = 0;
-    int cnt;
-    for(int i = 0; i < (int)table.size() - 1; ++i) {
-        befBig = table[i];
-        cnt = 1;
-        for(int j = i+1; j < (int)table.size(); ++j) {
-            if(befBig < table[j]) {
-                befBig = table[j];
-                cnt++;
+    
+    for(int i = 1; i < (int)table.size(); ++i) {
+        for(int j = i - 1; j >= 0; --j) {
+            if(table[i] > table[j]) {
+                dp[i] = max(dp[i], dp[j] + 1);
             }
-        }  
-        dp[i] = cnt;
+
+        }
     }
+
+}
+
+void printTable() {
+    for(int i = 0 ; i < (int)table.size(); ++i) {
+        cout << dp[i] << " ";
+    }
+    cout << endl;
 }
 
 int main() {
@@ -40,6 +44,7 @@ int main() {
     init();
     process();
 
+    // printTable();
     cout << *max_element(dp.begin(), dp.end());
 
     return 0;
