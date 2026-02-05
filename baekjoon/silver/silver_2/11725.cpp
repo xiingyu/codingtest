@@ -23,12 +23,9 @@ void init() {
 void dfs(const int start, const int bef) {
     for(int target : table[start]) {
         if(target == bef) continue;
-        // cout << target;
         parents[target] = start;
         dfs(target, start);
     }
-
-
 }
 
 
