@@ -1,94 +1,113 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#define INF 1e9
 using namespace std;
 
 int N;
-int ans = INF;
-vector<vector<int>> table;
-vector<vector<int>> dp;
+struct polls {
+    int me;
+    int to;
+
+    bool operator<(const polls& other) {
+        if(me == other.me) {
+            return to < other.to;
+        } else {
+            return me < other.me;
+        }
+    }
+};
+vector<polls> A;
+vector<int> table;
+vector<int> ansArr;
+vector<int> idxArr; 
 
 void init() {
     cin >> N;
-
-    table.assign(N,vector<int>(3));
-    dp.assign(N, vector<int>(3, INF));
+    A.resize(N);
     for(int i = 0; i < N; ++i) {
-        cin >> table[i][0] >> table[i][1] >> table[i][2];
+        cin >> A[i].me >> A[i].to;
     }
+    sort(A.begin(), A.end());
 
-    for(int i = 0; i < 3; ++i) {
-        dp[0][i] = table[0][i];
-    }
-}
-
-void printTable() {
     for(int i = 0; i < N; ++i) {
-        for(int j = 0; j < 3; ++j) {
-            cout << dp[i][j] << " ";
-        }
-        cout << endl;
-    }
-}
-
-
-
-void DPLogic() {
-    for(int rgb = 0; rgb < 3; ++rgb) {
-        for(int i = 0; i < 3; ++i) {
-            if(rgb == i)   dp[1][i] = INF;
-            else {
-                dp[1][i] = table[1][i] + table[0][rgb];
-            }
-        }
-
-        for(int i = 2; i < N; ++i) {
-            for(int j = 0; j < 3; ++j) {
-                if(j == 0) {
-                    dp[i][j] = min(dp[i-1][1], dp[i-1][2]) + table[i][j];
-                } else if (j == 1) {
-                    dp[i][j] = min(dp[i-1][0], dp[i-1][2]) + table[i][j];
-                } else {
-                    dp[i][j] = min(dp[i-1][1], dp[i-1][0]) + table[i][j];
-                }
-            }
-        }
-
-        for(int i = 0; i < 3; ++i) {
-            if(rgb == i)    continue;
-            else {
-                ans = min(ans, dp[N-1][i]);
-                // printTable();
-            }
-        }
-
+        table.push_back(A[i].to);
     }
 
-
-    
-
-    // for(int j = 0; j < 3; ++j) {
-    //     for(int k = 0; k < 3; ++k) {
-    //         if(j == k) continue;
-    //         dp[N-2][j] = min(dp[N-1][k])
-    //     }
-    // }
-
+    idxArr.resize(N, 0);
 
 }
 
+void LISLogic() {
+    int idx = 1; int temp = 0; int localTemp = 0;
 
+    ansArr.push_back(table[0]);
+    temp = table[0];
 
+    for(int i = 1; i < N; ++i) {
+        temp = table[i];
+        if(temp > ansArr[idx-1]) {
+            ansArr.push_back(temp);
+            idxArr[i] = idx;
+            idx++;
+        } else {
+            localTemp = lower_bound(ansArr.begin(), ansArr.begin() + idx, temp) - ansArr.begin();
+            ansArr[localTemp] = temp;
+            idxArr[i] = localTemp;
+        }
+    }
+}
+void printTable(const vector<int>& ansIndex) {
+    for(int i = 0; i < ansArr.size(); ++i) {
+        cout << ansArr[i] << ' ';
+    }
+    cout << endl;
+    for(int i = 0; i < N; ++i) {
+        cout << table[i] << ' ';
+    }
+    cout << endl;
+    for(int i = 0; i < idxArr.size(); ++i) {
+        cout << idxArr[i] << ' ';
+    }
+    cout << endl;
+    for(int i = 0; i < ansIndex.size(); ++i) {
+        cout << ansIndex[i] << ' ';
+    }
+    cout << endl;
+}
 
 int main() {
 	ios::sync_with_stdio(0); cin.tie(0); cout.tie(0);
     init();
-    DPLogic();
-    // printTable();
+    LISLogic();
+    
+
+    vector<int> ansIndex;
+    int tempIdx = ansArr.size() - 1;
+    for(int i = N-1; i >= 0; --i) {
+        if(idxArr[i] == tempIdx) {
+            ansIndex.push_back(i);
+            tempIdx--;
+        }
+        if(tempIdx < 0) break;
+    }
+
+    tempIdx = (int)ansIndex.size();
+    // cout << tempIdx << endl << endl;;
+    cout << N - tempIdx << '\n';
+    tempIdx--;
+    // printTable(ansIndex);
 
 
-    cout << ans;
+    for(int i = 0; i < N; ++i) {
+        polls target = A[i];
+
+        if(ansIndex[tempIdx] == i) {
+            tempIdx--;
+        } else {
+            cout << target.me << '\n';
+        }
+    }
+        
 
 
     return 0;
