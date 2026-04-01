@@ -183,7 +183,7 @@ def main():
         decay_half_life=90.0,
         cold_penalty_alpha=0.20,
         pair_boost_beta=0.35,
-        seed=20251122,
+        seed=20260321,
         recency_tau=8.0,
         recency_gamma=3.0,
         ban_last_m=0,

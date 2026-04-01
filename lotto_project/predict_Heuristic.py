@@ -139,7 +139,7 @@ def main():
         decay_half_life=90.0,
         cold_penalty_alpha=0.20,
         pair_boost_beta=0.35,
-        seed=20251213,  # 시드 바꾸면 다른 조합 나옴
+        seed=20260321,  # 시드 바꾸면 다른 조합 나옴
     )
 
     print(f"데이터 회차 범위: {rows[0][0]} ~ {rows[-1][0]} (총 {len(rows)}회)")
